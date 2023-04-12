@@ -19,13 +19,16 @@ def cadastro(request):
             return redirect('/usuarios/cadastro')
 #           return redirect(reverse('cadastro'))
         
-        return HttpResponse ('teste')
-        # Vamos criar uma variavel para podemo enviar
- #       user = User.objects.filter(username=username)
-
-#        if user.exists():
-#            return redirect(reverse('cadastro'))   
+        #Lição de casa:  fazer validação de senha forte
+      
+        # Seria tipo de filtro para depois no verica se usuario ja existe 
+        user = User.objects.filter(username=username)
         
- #       user = User.objects.create_user(username=username, email=email, password=senha)
+        if user.exists(): # verifica se usuario ja existe, caso sim volta na pagina de casdastro
+            return redirect(reverse('cadastro'))   
+        
+        # Para cadastrra no banco de dados
+        user = User.objects.create_user(username=username, email=email, password=senha)
   #      user.save()
    #     return redirect(reverse('login'))
+        return HttpResponse ('teste')
