@@ -2,7 +2,7 @@
     <h3>CADASTRO</h3>
     <hr style="border-color: #7E7B7C">
 
-    <form action="#" method="POST">
+    <form action="{% url 'cadastro' %}" method="POST">{ {% csrf_token %}}
         <label>Username:</label> 
         <input type="text" class="form-control" placeholder="Username..." name="username">
         <br>
