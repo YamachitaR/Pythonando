@@ -23,4 +23,6 @@ urlpatterns = [
     # Esse include me parece que e o mesmo que foi adicionado la em cima do pacote
     #depois vamos criar um arquivo chamado urls,py dentro do usuarios
     path('usuarios/', include('usuarios.urls')),
+
+    path('eventos/', include('eventos.urls')),
 ]
