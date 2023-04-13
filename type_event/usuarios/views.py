@@ -37,3 +37,9 @@ def cadastro(request):
    #     return redirect(reverse('login'))
         messages.add_message(request, constants.SUCCESS, 'Cadastro confirmado!')
         return redirect(reverse('login'))  
+    
+
+# Funcao relacionado a login
+def login(request):
+    if request.method == "GET":
+        return render(request, 'login.html')
