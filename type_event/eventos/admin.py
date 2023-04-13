@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Evento
 
-# Register your models here.
+# adm -login
+# 123 - senha
