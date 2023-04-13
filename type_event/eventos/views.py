@@ -5,15 +5,14 @@ from .models import Evento
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.shortcuts import redirect
 
 # esse @login_required serve para acessa a pagina somente se tiver logado
 @login_required
-def novo_evento (request):
-    if (request.method == "GET"):
+def novo_evento(request):
+    if request.method == "GET":
         return render(request, 'novo_evento.html')
     elif request.method == "POST":
-
-        #pegando os valores da tabela
         nome = request.POST.get('nome')
         descricao = request.POST.get('descricao')
         data_inicio = request.POST.get('data_inicio')
@@ -26,7 +25,6 @@ def novo_evento (request):
         
         logo = request.FILES.get('logo')
         
-        #seria passando na variavelpara que possamos gravar depois
         evento = Evento(
             criador=request.user,
             nome=nome,
@@ -39,8 +37,7 @@ def novo_evento (request):
             cor_fundo=cor_fundo,
             logo=logo,
         )
-
-        # salvando no banco de dados
+    
         evento.save()
         
         messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
