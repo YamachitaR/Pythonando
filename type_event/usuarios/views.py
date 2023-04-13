@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.http import HttpResponse
-
+from django.contrib import auth
 
 def cadastro(request):
     if request.method == "GET":
@@ -41,5 +41,22 @@ def cadastro(request):
 
 # Funcao relacionado a login
 def login(request):
-    if request.method == "GET":
+    if request.method == "GET": #antes de enviar
         return render(request, 'login.html')
+    elif request.method == "POST": # depois enviado 
+
+        # pegando variavel login e senha
+        username = request.POST.get('username')
+        senha = request.POST.get('senha')
+
+        # verificando autenticação 
+        user = auth.authenticate(username=username, password=senha)
+
+        # se não der certo permanece na pagina e mostra mensagem de erro
+        if not user:
+            messages.add_message(request, constants.ERROR, 'Username ou senha inválidos')
+            return redirect(reverse('login'))
+        
+        #autenticado into na pagina de evento 
+        auth.login(request, user)
+        return redirect('/eventos/novo_evento/')
