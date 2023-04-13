@@ -20,8 +20,7 @@ def cadastro(request):
         # verifica a senha, caso não for igual voltar no cadastro 
         if not (senha == confirmar_senha):
             messages.add_message(request, constants.ERROR, 'A senha não são as mesma') #messagem de erro    
-            return redirect('/usuarios/cadastro')
-#           return redirect(reverse('cadastro'))
+            return redirect(reverse('cadastro'))
         
         #Lição de casa:  fazer validação de senha forte
       
@@ -37,4 +36,4 @@ def cadastro(request):
   #      user.save()
    #     return redirect(reverse('login'))
         messages.add_message(request, constants.SUCCESS, 'Cadastro confirmado!')
-        return HttpResponse ('teste')
+        return redirect(reverse('login'))  
