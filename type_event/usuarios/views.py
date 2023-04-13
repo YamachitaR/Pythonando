@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.messages import constants
 from django.http import HttpResponse
+
 
 def cadastro(request):
     if request.method == "GET":
@@ -15,7 +18,8 @@ def cadastro(request):
         confirmar_senha = request.POST.get('confirmar_senha')
 
         # verifica a senha, caso não for igual voltar no cadastro 
-        if not (senha == confirmar_senha):    
+        if not (senha == confirmar_senha):
+            messages.add_message(request, constants.ERROR, 'A senha não são as mesma') #messagem de erro    
             return redirect('/usuarios/cadastro')
 #           return redirect(reverse('cadastro'))
         
@@ -25,10 +29,12 @@ def cadastro(request):
         user = User.objects.filter(username=username)
         
         if user.exists(): # verifica se usuario ja existe, caso sim volta na pagina de casdastro
+            messages.add_message(request, constants.ERROR, 'Usuario já existe')
             return redirect(reverse('cadastro'))   
         
         # Para cadastrra no banco de dados
         user = User.objects.create_user(username=username, email=email, password=senha)
   #      user.save()
    #     return redirect(reverse('login'))
+        messages.add_message(request, constants.SUCCESS, 'Cadastro confirmado!')
         return HttpResponse ('teste')
