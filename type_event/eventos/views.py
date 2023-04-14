@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Evento
+from .models import Evento, Certificado
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -9,6 +9,8 @@ import csv
 from secrets import token_urlsafe
 import os
 from django.conf import settings
+
+
 
 # esse @login_required serve para acessa a pagina somente se tiver logado
 @login_required
@@ -126,3 +128,14 @@ def gerar_csv(request, id):
             writer.writerow(x)
     # ennviando o arquivo
     return redirect(f'/media/{token}')
+
+
+# vai direcionar para pagina de certificado evento
+def certificados_evento(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+    if request.method == "GET":
+        # quantidade de certificado = (total de participante) - (certificado ja gerado)
+        qtd_certificados = evento.participantes.all().count() - Certificado.objects.filter(evento=evento).count()
+        return render(request, 'certificados_evento.html', {'evento': evento, 'qtd_certificados': qtd_certificados})
