@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +28,11 @@ urlpatterns = [
     path('usuarios/', include('usuarios.urls')),
 
     path('eventos/', include('eventos.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# + static estamos usando para trabalhar como nossa imagem que usuario upa
+# settings.MEDIA_URL esta acessando o valor da variavel MEDIA_URL, nesse caso o valor é media
+# resumindo, estamos consertando a roda, pois no banco de dados esta salvo so como logo/imagem.png
+# mas queremos que esteja /media/logo/imagem.png
+
+ 

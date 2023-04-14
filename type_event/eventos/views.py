@@ -43,7 +43,27 @@ def novo_evento(request):
         messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
         return redirect(reverse('novo_evento'))
     
-
+# pagina do gerencia evento 
 def gerenciar_evento(request):
     if request.method == "GET":
-        return render(request, 'gerenciar_evento.html')
+
+        # vai pegar o nome para depois nos filtrar
+        nome = request.GET.get('nome')
+
+        #vai pegar so eventos do proprio usuario 
+        eventos = Evento.objects.filter(criador=request.user)
+
+        # se o nome contiver algo é pq usuario que que filtre
+        if nome:
+            eventos = eventos.filter(nome__contains=nome)
+
+            # se fosse somente 
+            #eventos = eventos.filter(nome=nome)
+            # nome do lado esquedo esta relacionado a tabela e o lado direito da nossa variavel
+            # nesse caso usuario tem que digitar exatamente igual para aparecer
+            # ao fazer "nome__contains" significa pelo menos tem que conter 
+
+            # Desafio: fazer outros tipos de filtro, por exemplo por data
+
+        # Repare nesse eventos que é um dicionario, vai se importante para imprimir na pagina
+        return render(request, 'gerenciar_evento.html', {'eventos': eventos})
