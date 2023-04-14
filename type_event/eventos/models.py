@@ -17,6 +17,11 @@ class Evento(models.Model):
     carga_horaria = models.IntegerField()
     logo = models.FileField(upload_to="logos") # pegando o tipo imagem, salvando na pasta logos
 
+    # A relaçao vai se de muitos para muitos, ou seja,
+    # um participantes pode participar de varios eventos
+    # assim como um evento pode ter varios participantes
+    participantes = models.ManyToManyField(User, related_name="evento_participante", null=True, blank=True)
+
     #paleta de cores
     # as vores estao em hexadecimal 
     cor_principal = models.CharField(max_length=7)

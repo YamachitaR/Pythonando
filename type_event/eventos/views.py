@@ -43,6 +43,7 @@ def novo_evento(request):
         messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
         return redirect(reverse('novo_evento'))
     
+# @login_required
 # pagina do gerencia evento 
 def gerenciar_evento(request):
     if request.method == "GET":
@@ -68,7 +69,7 @@ def gerenciar_evento(request):
         # Repare nesse eventos que é um dicionario, vai se importante para imprimir na pagina
         return render(request, 'gerenciar_evento.html', {'eventos': eventos})
     
-
+#@login_required  tirar comentario depois
 # vai se aquela pagina de inscerver
 def inscrever_evento(request, id):
 	
@@ -78,3 +79,10 @@ def inscrever_evento(request, id):
     evento = get_object_or_404(Evento, id=id)
     if request.method == "GET":
         return render(request, 'inscrever_evento.html', {'evento': evento})
+    elif request.method == "POST":
+        # Validar se o usuário já é um participante
+        evento.participantes.add(request.user)
+        evento.save()
+
+        messages.add_message(request, constants.SUCCESS, 'Inscrição com sucesso.')
+        return redirect(reverse('inscrever_evento', kwargs={'id': id}))

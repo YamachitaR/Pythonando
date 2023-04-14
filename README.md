@@ -1,7 +1,7 @@
 # pythonando
 
 
-Parei na 2º aula em 43
+Parei na 2º aula em 1:28
 
 5:17 ->path
 
