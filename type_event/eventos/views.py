@@ -5,7 +5,10 @@ from .models import Evento
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages import constants
-
+import csv
+from secrets import token_urlsafe
+import os
+from django.conf import settings
 
 # esse @login_required serve para acessa a pagina somente se tiver logado
 @login_required
@@ -96,3 +99,30 @@ def participantes_evento(request, id):
     if request.method == "GET":
         participantes = evento.participantes.all()[::3] # aqui eh uma lista so para aparece 3 primeiros
         return render(request, 'participantes_evento.html', {'evento': evento, 'participantes': participantes})
+    
+
+def gerar_csv(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+    
+    # Pegando todos os particiapantes
+    participantes = evento.participantes.all() 
+    
+    # criando nome aleartorio de extensao csv
+    token = f'{token_urlsafe(6)}.csv'
+
+    # cocatenando nome da pasta (midia) com o nome gerado
+    path = os.path.join(settings.MEDIA_ROOT, token)
+
+    # Abrindo o arquivo
+    with open(path, 'w') as arq:
+        # escrevendo com delimitado sendo virgula
+        writer = csv.writer(arq, delimiter=",")
+        for participante in participantes:
+            #informacao que queremos grava que sao nome e email
+            x = (participante.username, participante.email)
+            # gravando
+            writer.writerow(x)
+    # ennviando o arquivo
+    return redirect(f'/media/{token}')
