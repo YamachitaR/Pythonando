@@ -32,6 +32,8 @@ começa fazer exportaçao de arquivo 1:41
 
 
 
-Aula  3
+Aula  3: 55
 
-gerar oc ertificado 18:59 
+gerar oc ertificado 18
+
+filtro 
