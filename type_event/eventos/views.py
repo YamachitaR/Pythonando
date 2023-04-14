@@ -86,3 +86,13 @@ def inscrever_evento(request, id):
 
         messages.add_message(request, constants.SUCCESS, 'Inscrição com sucesso.')
         return redirect(reverse('inscrever_evento', kwargs={'id': id}))
+    
+
+def participantes_evento(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    # esse if faz com que somente a pessoa que criou o evento tenha acesso
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+    if request.method == "GET":
+        participantes = evento.participantes.all()[::3] # aqui eh uma lista so para aparece 3 primeiros
+        return render(request, 'participantes_evento.html', {'evento': evento, 'participantes': participantes})

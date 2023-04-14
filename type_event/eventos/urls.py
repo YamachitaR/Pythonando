@@ -8,5 +8,6 @@ urlpatterns = [
     # esse sera dinamico pois cada evento tela um link
     # esse o motivo <int:id>
     path('inscrever_evento/<int:id>/', views.inscrever_evento, name="inscrever_evento"), 
+    path('participantes_evento/<int:id>/', views.participantes_evento, name="participantes_evento"),
   
 ]
