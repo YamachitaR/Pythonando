@@ -29,3 +29,9 @@ funçao 1:31 termina
 html participante começa 1:31
 
 começa fazer exportaçao de arquivo 1:41
+
+
+
+Aula  3
+
+gerar oc ertificado 18:59 

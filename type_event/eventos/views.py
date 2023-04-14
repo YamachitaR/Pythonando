@@ -9,8 +9,11 @@ import csv
 from secrets import token_urlsafe
 import os
 from django.conf import settings
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO  
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
-
+import sys
 
 # esse @login_required serve para acessa a pagina somente se tiver logado
 @login_required
@@ -18,18 +21,18 @@ def novo_evento(request):
     if request.method == "GET":
         return render(request, 'novo_evento.html')
     elif request.method == "POST":
+        # Pegando os dados
         nome = request.POST.get('nome')
         descricao = request.POST.get('descricao')
         data_inicio = request.POST.get('data_inicio')
         data_termino = request.POST.get('data_termino')
         carga_horaria = request.POST.get('carga_horaria')
-
         cor_principal = request.POST.get('cor_principal')
         cor_secundaria = request.POST.get('cor_secundaria')
         cor_fundo = request.POST.get('cor_fundo')
-        
         logo = request.FILES.get('logo')
         
+        # Preparando para salva no Banco de Dados
         evento = Evento(
             criador=request.user,
             nome=nome,
@@ -43,6 +46,7 @@ def novo_evento(request):
             logo=logo,
         )
     
+        # salvando 
         evento.save()
         
         messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
@@ -139,3 +143,65 @@ def certificados_evento(request, id):
         # quantidade de certificado = (total de participante) - (certificado ja gerado)
         qtd_certificados = evento.participantes.all().count() - Certificado.objects.filter(evento=evento).count()
         return render(request, 'certificados_evento.html', {'evento': evento, 'qtd_certificados': qtd_certificados})
+    
+
+
+
+# como nome ja diz vai ser para gerar o certificado 
+def gerar_certificado(request, id):
+    # essa 3 linhas abaixo que repete varias vezes
+    # serve para garantir quem esta acessando é a pessoa que fez  o evento
+    evento = get_object_or_404(Evento, id=id)
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+
+    # estamos pegando o path do template e da fonte
+    path_template = os.path.join(settings.BASE_DIR, 'templates/static/evento/img/template_certificado.png')
+    path_fonte = os.path.join(settings.BASE_DIR, 'templates/static/fontes/arimo.ttf')
+   
+    # gerar certificado para cada participante 
+    for participante in evento.participantes.all():
+        # Desafio: Validar se já existe certificado desse participante para esse evento
+        
+        # abrir imagem
+        img = Image.open(path_template)
+        
+        #acho que nao precisa
+        #path_template = os.path.join(settings.BASE_DIR, 'templates/static/evento/img/template_certificado.png')
+        
+        # abrindo imagem no sentindo para modificar
+        draw = ImageDraw.Draw(img)
+        
+        # Fonte nome
+        fonte_nome = ImageFont.truetype(path_fonte, 60)
+        # Fonte da descrição, esse numero é o tamanho 
+        fonte_info = ImageFont.truetype(path_fonte, 30)
+        
+        # dra.text( posicao, o que quer escrito, fonte, cor) -> para escrever
+        # escrevendo nome do particpante, 
+        draw.text((230, 651), f"{participante.username}", font=fonte_nome, fill=(0, 0, 0))
+        draw.text((761, 782), f"{evento.nome}", font=fonte_info, fill=(0, 0, 0)) # nome do evento 
+        draw.text((816, 849), f"{evento.carga_horaria} horas", font=fonte_info, fill=(0, 0, 0)) # carga horaria
+        
+        # salvando em uma variavel, nao é possivel salvar direto
+        output = BytesIO()
+        img.save(output, format="PNG", quality=100)
+        output.seek(0) # seria tipo para voltar no começo do arquivo
+
+        # preparando o arquivo para ser salvo
+        img_final = InMemoryUploadedFile(output,
+                                        'ImageField',
+                                        f'{token_urlsafe(8)}.png',
+                                        'image/jpeg',
+                                        sys.getsizeof(output),
+                                        None)
+        certificado_gerado = Certificado(
+            certificado=img_final,
+            participante=participante,
+            evento=evento,
+        )
+        #salvando
+        certificado_gerado.save()
+    
+    messages.add_message(request, constants.SUCCESS, 'Certificados gerados')
+    return redirect(reverse('certificados_evento', kwargs={'id': evento.id}))
