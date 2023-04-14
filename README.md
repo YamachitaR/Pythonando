@@ -1,7 +1,7 @@
 # pythonando
 
 
-Parei na 2º aula em 34
+Parei na 2º aula em 43
 
 5:17 ->path
 
@@ -16,3 +16,5 @@ arrumando link da midia 26
 arrumou o link da navegação 29
 
 Começando criar o filtro 34
+
+Começa a pagina de inscriçao 43

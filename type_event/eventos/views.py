@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Evento
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages import constants
-from django.shortcuts import redirect
+
 
 # esse @login_required serve para acessa a pagina somente se tiver logado
 @login_required
@@ -67,3 +67,14 @@ def gerenciar_evento(request):
 
         # Repare nesse eventos que é um dicionario, vai se importante para imprimir na pagina
         return render(request, 'gerenciar_evento.html', {'eventos': eventos})
+    
+
+# vai se aquela pagina de inscerver
+def inscrever_evento(request, id):
+	
+    # esse id sera pagina especifivca do evento
+    # caso nao existir a pagina vai aparecer a pagina de erro 404
+    # praticamente esta procurando se existe o evento no banco de dados
+    evento = get_object_or_404(Evento, id=id)
+    if request.method == "GET":
+        return render(request, 'inscrever_evento.html', {'evento': evento})
