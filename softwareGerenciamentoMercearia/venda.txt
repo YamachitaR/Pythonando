@@ -1,0 +1,4 @@
+banana|5|frutas|Comprador Joa|Vendendo Maria|4|13/05/2023
+banana|5|frutas|Comprador Joa|Vendendo Maria|4|13/05/2023
+banana|5|frutas|Comprador Joa|Vendendo Maria|4|13/05/2023
+banana|5|frutas|Comprador Joa|Vendendo Maria|4|13/05/2023
