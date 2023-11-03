@@ -1,7 +1,5 @@
 from Models import *
 
-
-
 class DaoCategoria:
     @classmethod
     def salvar(clc, categoria):
@@ -20,6 +18,7 @@ class DaoCategoria:
         cat = []
         for i in cls.categoria:
             cat.append(Categoria(i))
+
         return Categoria
 
 
@@ -47,8 +46,48 @@ class DaoVenda:
 
 
 
+class DaoEstoque:
+    @classmethod
+    def salvar (cls, produto:Produtos,  quantidade):
+        with open('estoque.txt', 'a') as arq:
+            arq.writelines(produto.name + "|" + produto.preco + "|" + produto.categoria +  "|" + str(quantidade))
+            arq.writelines('\n')
 
-x = DaoVenda.ler()
+    @classmethod
+    def ler(cls):
+        with open('estoque.txt', 'r') as arq:
+            cls.estoque = arq.readlines()
+        
+        cls.estoque = list(map(lambda x: x.replace('\n', ''), cls.estoque))
+        cls.estoque = list(map(lambda x: x.split('|'), cls.estoque))
 
-print(x[0].comprador  )
+        est = []
+        if len(cls.estoque) > 0:
+            for i in cls.estoque:
+                est.append(Estoque(Produtos(i[0], i[1], i[2], i[3])))
+        
+        return est
 
+class DaoFonecedor:
+    @classmethod
+    def salvar(cls, fonecedor:Fonecedor):
+        with open('fornecedores.txt', 'a') as arq:
+            arq.writelines(fonecedor.nome + "|" + fonecedor.cnpj + "|" + fonecedor.telefone + "|" + fonecedor.categoria)
+            arq.writelines('\n')
+
+
+    @classmethod
+    def ler(cls):
+        with open('fonecedores.txt', 'r') as arq:
+            cls.fornecedores = arq.readlines()
+
+        cls.fornecedores = list(map(lambda x: x.replace('\n', ''), cls.fornecedores ))
+        cls.fornecedores = list(map(lambda x: x.split('|'), cls.fornecedores ))
+
+        forn = []
+        for i in cls.fornecedores:
+            forn.append(Fonecedor(i[0], i[1], i[2], i[3]))
+        
+        return forn
+    
+    # Parei na dao fucionario 

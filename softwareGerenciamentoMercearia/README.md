@@ -16,3 +16,11 @@ Caixa
 - Relatório de Vendas por data 
 - Relatório de produto mais vendido
 - Relatório  de cliente que mais compra   
+
+
+# Arquivos
+
+## Models 
+
+Onde vamos definir o "Banco de Dados" 
+
