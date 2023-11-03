@@ -19,7 +19,7 @@ class DaoCategoria:
         for i in cls.categoria:
             cat.append(Categoria(i))
 
-        return Categoria
+        return cat
 
 
 class DaoVenda:
@@ -90,4 +90,47 @@ class DaoFonecedor:
         
         return forn
     
-    # Parei na dao fucionario 
+
+class DaoFuncionario:
+    @classmethod
+    def salvar(cls, funcionario:Funcionario):
+        with open('funcionarios.txt','a') as arq:
+            arq.writelines(funcionario.clt + "|" + funcionario.nome + "|" + funcionario.telefone
+                           + "|" + funcionario.cpf + "|" + funcionario.email + "|" + funcionario.endereco)
+            arq.writelines('\n')
+
+    @classmethod
+    def ler(cls):
+        with open('funcionarios.txt', 'r') as arq:
+            cls.funcionarios = arq.readlines()
+
+        cls.funcionarios = list(map(lambda x: x.replace('\n', ''), cls.funcionarios))
+        cls.funcionarios = list(map(lambda x: x.split("|"),cls.funcionarios))
+
+        funcionario = []
+        for i in cls.funcionarios:
+            funcionario.append(Funcionario(i[0], i[1], i[2], i[3], i[4], i[5]))
+
+        return funcionario
+    
+class DaoPessoa:
+    @classmethod
+    def salvar(cls, pessoa: Pessoa):
+        with open('cliente.txt', 'a') as arq:
+            arq.writelines(pessoa.nome + "|" + pessoa.telefone + "|" + pessoa.cpf + "|" +  pessoa.email + "|" + pessoa.endereco)
+            arq.writelines('\n')
+    
+    @classmethod
+    def ler(cls):
+        with open('cliente.txt', 'r') as arq:
+            cls.clientes = arq.readlines()
+        
+        cls.clientes = list(map(lambda x: x.replace('\n', ''), cls.clientes))
+        cls.clientes = list(map(lambda x: x.split('|'), cls.clientes))
+
+        clientes = []
+        for i in cls.clientes:
+            clientes.append(Pessoas(i[0], i[1], i[2], i[3], i[4]))
+
+        return clientes 
+
