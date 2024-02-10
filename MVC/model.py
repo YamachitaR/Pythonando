@@ -3,3 +3,6 @@ class Pessoa:
         self.nome = nome
         self.idade = idade 
         self.cpf = cpf
+
+    def __str__(self):
+        return f"{self.nome}|{self.idade}|{self.cpf}"

@@ -18,3 +18,14 @@ MVC é uma sigla que representa o padrão de arquitetura de software "Model-View
 A principal vantagem do padrão MVC é a separação clara de responsabilidades. Isso facilita a manutenção do código, pois as mudanças em uma parte do aplicativo geralmente não afetam diretamente as outras partes. Além disso, facilita o desenvolvimento colaborativo, pois diferentes equipes ou desenvolvedores podem trabalhar em camadas diferentes do aplicativo sem interferir no trabalho uns dos outros.
 
 MVC é amplamente adotado em muitos frameworks de desenvolvimento web, como Ruby on Rails, Django (para Python), Angular (para JavaScript/TypeScript), e outros, para facilitar o desenvolvimento de aplicativos web escaláveis e organizados.
+
+
+**OBS:** Texto gerado pelo ChatGPT
+
+## Como rodar?
+
+~~~
+python3 view.py
+~~~
+
+As instruções aparecem no terminal.

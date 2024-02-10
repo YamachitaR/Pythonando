@@ -3,14 +3,21 @@ from model import Pessoa
 class PessoaDal:
     @classmethod
     def salvar(cls, pessoa):
-        with open('pessoa.txt', 'w') as arq:
-            arq.write(pessoa.nome + " " + str(pessoa.idade) + " " + str(pessoa.cpf))
+        with open('pessoa.txt', 'a') as arq:
+            arq.writelines(pessoa)
+            arq.writelines('\n')
     
-    #não esta finalizado mas eh para ter uma idea com trabalhar 
     @classmethod
-    def ler(self):
-        nome = "Caio"
-        idade = 21
-        cpf = 1231232
-        return(Pessoa(nome, idade, cpf))
+    def ler(cls):
+        with open('pessoa.txt', 'r') as arq:
+            cls.pessoa = arq.readlines()
+        
+        cls.pessoa = list(map(lambda x: x.replace('\n', ''), cls.pessoa))
+        cls.pessoa = list(map(lambda x: x.split('|'), cls.pessoa))
+
+        lista = []
+        for i in cls.pessoa:
+            lista.append(str(i))
+
+        return lista
     

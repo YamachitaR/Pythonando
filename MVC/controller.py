@@ -10,10 +10,19 @@ class PessoaController:
             # return True para saber se ocorreu tudo bem 
         
             try:
-                PessoaDal.salvar(Pessoa(nome, idade, cpf))
+                PessoaDal.salvar(str(Pessoa(nome, idade, cpf)))
+                
                 return True
             except:
                 return False
         else:
             return False 
 
+    @classmethod
+    def mostrarPessoa(cls):
+        pessoa = PessoaDal.ler()
+        if len(pessoa) == 0:
+            print("não tem elemento cadastrado")
+        else:
+            for i in pessoa:
+                print(i)
