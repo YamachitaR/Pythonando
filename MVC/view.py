@@ -2,10 +2,9 @@ from controller import PessoaController
 
 def opcao():
     try:
-        decisao =  int(input( "digitte 1 para salva, 2 para ver as pessoas salvo, 3 para sair:"))
+        decisao =  int(input( "Digite: \n1 para salva; \n2 para ver a lista salvo, \n3 para sair, \nSua opção:"))
         return decisao
     except:
-        print("digite numero")
         return 0
 
 while True:
@@ -19,11 +18,11 @@ while True:
         cpf = input("cpf:")
 
         if PessoaController.cadastrar(nome, idade, cpf):
-            print("cadastado com sucesso")
+            print("Cadastado com sucesso!")
         else:
-            print("falha ao cadastrar")
+            print("Falha ao cadastrar!")
 
     elif(decisao == 2):
         PessoaController.mostrarPessoa()
     else:
-        print("Comando invalido")
+        print("Comando invalido!")

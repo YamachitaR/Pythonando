@@ -21,7 +21,7 @@ class PessoaController:
     @classmethod
     def mostrarPessoa(cls):
         pessoa = PessoaDal.ler()
-        if len(pessoa) == 0:
+        if len(pessoa) == 1:
             print("não tem elemento cadastrado")
         else:
             for i in pessoa:

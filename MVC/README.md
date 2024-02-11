@@ -1,6 +1,6 @@
 # MVC
 
-Objetivo é entender MVC
+Objetivo é entender MVC e a melhor forma de entender é fazer um exemplo. Estamos aplicando um pequeno cadastro de pessoas usando o conceito MVC.
 
 ## O que é MVC?
 
@@ -29,3 +29,8 @@ python3 view.py
 ~~~
 
 As instruções aparecem no terminal.
+
+## Melhorias futura
+
+- Deixar formatado a tabela;
+- Deixar na norma de boas práticas;

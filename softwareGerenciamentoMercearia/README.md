@@ -1,13 +1,13 @@
-# Pythonando-SoftwareGerenciamentoMercearia
+# Software Gerenciamento Mercearia
 
-Porjeto proposto pelo curso Pythonando com objetivo de aprender MODEL e DAL
+Projeto proposto pelo professor com objetivo de aprender MVC
 
 ## Requisisto do projeto 
 
 -  Cadastro /  Alteração / Remoção de Categoria;
 -  Cadastro /  Alteração / Remoção de Produto;
 -  Cadastro /  Alteração / Remoção de Fonecedor;
--  Cadastro /  Alteração / Remoção de Criente;
+-  Cadastro /  Alteração / Remoção de Cliente;
 -  Cadastro /  Alteração / Remoção de funcionário;
 
 Caixa 
@@ -18,9 +18,4 @@ Caixa
 - Relatório  de cliente que mais compra   
 
 
-# Arquivos
-
-## Models 
-
-Onde vamos definir o "Banco de Dados" 
 

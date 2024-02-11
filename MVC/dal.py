@@ -15,7 +15,7 @@ class PessoaDal:
         cls.pessoa = list(map(lambda x: x.replace('\n', ''), cls.pessoa))
         cls.pessoa = list(map(lambda x: x.split('|'), cls.pessoa))
 
-        lista = []
+        lista = [["nome", "idade", "cpf"]]
         for i in cls.pessoa:
             lista.append(str(i))
 
