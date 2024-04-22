@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
-from .models import Especialidades, DadosMedico, is_medico 
+from .models import Especialidades, DadosMedico, is_medico, DatasAbertas
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -80,7 +80,7 @@ def abrir_horario(request):
         
         if data_formatada <= datetime.now():
             messages.add_message(request, constants.WARNING, 'A data deve ser maior ou igual a data atual.')
-            return redirect('/medicos/abrir_horario')
+            return redirect('/medico/abrir_horario')
 
 
         horario_abrir = DatasAbertas(
@@ -91,7 +91,7 @@ def abrir_horario(request):
         horario_abrir.save()
 
         messages.add_message(request, constants.SUCCESS, 'Horário cadastrado com sucesso.')
-        return redirect('/medicos/abrir_horario')
+        return redirect('/medico/abrir_horario')
     
 def consultas_medico(request):
     if not is_medico(request.user):

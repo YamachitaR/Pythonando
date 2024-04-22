@@ -33,29 +33,14 @@ python manage.py runserver
 Acesse: 
 
 
-[http://127.0.0.1:8000/admin/] (http://127.0.0.1:8000/admin/)
+[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 
 
 
+[Page](texto/PAGE.md)
+
+[Melhoria Futura](texto/MELHORIA.md)
 
 
 
-
-
-# As páginas do Projeto
-
-
-
-
-
-## Logar cliente 
-[http://127.0.0.1:8000/usuarios/login/](http://127.0.0.1:8000/usuarios/login/)
-
-![alt text](texto/logar.png)
-
-## Cadastro Médico 
-
-[http://127.0.0.1:8000/medico/cadastro_medico/](http://127.0.0.1:8000/medico/cadastro_medico/)
-
-![alt text](texto/cadastro_medico.png)
