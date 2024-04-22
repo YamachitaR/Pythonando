@@ -10,7 +10,9 @@
 ![alt text](logar.png)
 
 
+## Home do Paciente
 
+![alt text](home_paciente.png)
 
 ## Cadastro Médico 
 
@@ -20,4 +22,4 @@
 
 
 ## ADM 
-![alt text](/adm.png)
+![alt text](adm.png)

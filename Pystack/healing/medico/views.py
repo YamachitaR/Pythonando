@@ -6,8 +6,8 @@ from .models import Especialidades, DadosMedico, is_medico, DatasAbertas
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages import constants
-from datetime import datetime
-
+from datetime import datetime,  timedelta
+from paciente.models import Consulta, Documento
 
 @login_required
 def cadastro_medico(request):
