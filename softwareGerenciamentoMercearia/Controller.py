@@ -7,7 +7,6 @@ class CategoriaController:
     def cadastrar(cls, categoria):
         try:
             if CategoriaController.existe(categoria):
-                print("Produto já cadastrado!")
                 return False
             else:
                 CategoriaDao.salvar(categoria)
@@ -27,7 +26,6 @@ class CategoriaController:
                     print(i.categoria)
         except:
             return False
-
 
     @classmethod
     def existe(cls, elemento):
@@ -114,31 +112,26 @@ class ProdutoController:
             return False
 
     @classmethod
-    def existe(cls, elemento):
-        
+    def existe(cls, nome):
         try:
-            
             dados = ProdutoDao.ler()
             for i in dados:
-                if i.nome.upper() == elemento.upper():
+                if i.nome.upper() == nome.upper():
                     return True
             return False  
-
         except:
             return False
         
-
-
     @classmethod
-    def excluir(cls, elemento):
-        if not (ProdutoController.existe(elemento)):
+    def excluir(cls, nome):
+        if not (ProdutoController.existe(nome)):
             print("Não existe esse elemento no banco de dados")
             return False
         
         dados = ProdutoDao.ler()
         lista = []
         for i in dados:
-            if i.nome.upper() != elemento.upper():
+            if i.nome.upper() != nome.upper():
                 lista.append(i)
 
         ProdutoDao.regravar(lista)
@@ -146,8 +139,8 @@ class ProdutoController:
         return True
     
     @classmethod
-    def alterar(cls, velho, novo):
-        if not(ProdutoController.existe(velho.nome)):
+    def alterar(cls, nome, novo):
+        if not(ProdutoController.existe(nome)):
             print("Não existe esse elemento no banco de dados")
             return False
         if (ProdutoController.existe(novo.nome)):
@@ -157,11 +150,10 @@ class ProdutoController:
         dados = ProdutoDao.ler()
         lista = []
         for i in dados:
-            if i.nome.upper() == velho.nome.upper():
+            if i.nome.upper() == nome.upper():
                 lista.append(novo)
             else:
                 lista.append(i)
-
         CategoriaDao.regravar(lista)
         print("Alterado com Sucesso!")
         return True

@@ -20,6 +20,10 @@ def testeProduto():
     ProdutoController.mostrar()
     ProdutoController.excluir("alface")
     ProdutoController.mostrar()
+    ProdutoController.cadastrar(a)
+    c = Produto("alf", 12, 9, Categoria("verdura"))
+    ProdutoController.cadastrar(c)
+    d = 
 
 
 testeProduto()

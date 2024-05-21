@@ -2,6 +2,43 @@ from Models import *
 
 # Entrar e Saida como objeto 
 
+class DAO:
+    @classmethod
+    def tipoFile(clc, objeto):
+        file = ""
+        if  isinstance(objeto, Categoria):
+            file = "categoria.txt"
+        elif isinstance(objeto, Produto):
+            file = "Produto.txt"
+        return file 
+    
+    @classmethod
+    def salvar(clc, objeto):
+        file = tipoFile(objeto):
+        with open(file, 'a') as arq:
+            arq.writelines(str(objeto))
+            arq.writelines('\n')
+    
+    @classmethod
+    def ler(cls, objeto):
+        file = tipoFile(objeto):
+        with open(file, 'r') as arq:
+            cls.dados = arq.readlines()
+        
+        cls.dados = list(map(lambda x: x.replace('\n', ''), cls.dados))
+        cls.dados = list(map(lambda x: x.split('|'), cls.dados))
+        
+        lista = []
+        for i in cls.dados:
+            if isinstance(objeto, Categoria):
+                lista.append(Categoria(i))
+            elif isinstance(objeto, Produto):
+                lista.append(Produto(i[0], i[1], i[2], Categoria(i[3])))
+        return lista
+    
+
+
+
 class CategoriaDao:
     @classmethod
     def salvar(clc, Categoria):
@@ -14,7 +51,6 @@ class CategoriaDao:
         with open('categoria.txt', 'r') as arq:
             cls.categoria = arq.readlines()
         
-
         cls.categoria = list(map(lambda x: x.replace('\n', ''), cls.categoria))
         lista = []
         for i in cls.categoria:
@@ -29,21 +65,16 @@ class CategoriaDao:
                 arq.writelines('\n')
 
 
-
 class ProdutoDao:
     @classmethod
     def salvar(clc, Produto):
-     
         with open("produto.txt", 'a') as arq:
             arq.writelines(str(Produto))
             arq.writelines('\n')
-    
     @classmethod
     def ler(cls):
         with open('produto.txt', 'r') as arq:
-           
             cls.dados = arq.readlines()
-
         
         cls.dados = list(map(lambda x: x.replace('\n', ''), cls.dados))
         cls.dados = list(map(lambda x: x.split('|'), cls.dados))
